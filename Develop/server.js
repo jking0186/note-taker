@@ -1,6 +1,7 @@
 // Dependencies
-const express = require("express");
-const fs = require("fs");
+var express = require("express");
+var path = require("path")
+var fs = require("fs");
 
 // Express App
 var app = express();
@@ -8,6 +9,10 @@ var PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extend: true }));
 app.use(express.json());
+
+// app.use(express.static('public'));
+
+
 
 
 // Routes
@@ -17,4 +22,30 @@ app.get("/", function (req, res) {
 
 app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
+});
+
+app.get("/api/notes", function (req, res) {
+    fs.readFile("./db/db.json", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        console.log(data);
+    });
+});
+
+app.post("/api/notes", function(req, res) {
+    fs.readFile("./db/db.json", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        let noteData = JSON.parse(data);
+        console.log(noteData);
+
+        let newNote = req.body;
+        console.log(newNote);
+    });
+})
+// Start our server
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
 });
