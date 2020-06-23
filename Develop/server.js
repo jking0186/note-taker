@@ -12,18 +12,18 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-
-
-
 // Routes
+
+// Main Page
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
+// Notes Page
 app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
-
+// API
 app.get("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", "utf8", function (error, data) {
         if (error) {
@@ -33,6 +33,7 @@ app.get("/api/notes", function (req, res) {
     });
 });
 
+//Post
 app.post("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", "utf8", function (error, data) {
         if (error) {
@@ -54,7 +55,12 @@ app.post("/api/notes", function (req, res) {
         })
         res.json(newData);
     });
-})
+});
+
+// Save
+
+// Delete
+
 // Start our server
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
