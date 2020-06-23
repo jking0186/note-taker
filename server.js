@@ -45,15 +45,15 @@ app.post("/api/notes", function (req, res) {
         let newNote = req.body;
         console.log(newNote);
 
+
+
         noteData.push(newNote);
 
-        fs.writeFile("./db/db.json", process.argv[2], function (err) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log("Success!");
+
+        fs.writeFile("./db/db.json", JSON.stringify(json, null, 2), function (err) {
+            if (err) throw err;
+            res.send('200');
         })
-        res.json(newData);
     });
 });
 
