@@ -2,7 +2,6 @@
 var express = require("express");
 var path = require("path")
 var fs = require("fs");
-var uuid = require("uuid/v4");
 
 // Express App
 var app = express();
@@ -35,14 +34,13 @@ app.get("/api/notes", function (req, res) {
 });
 
 //Post
-app.post("api/notes", function (req, res) {
-    fs.readFile("db/db.json", "utf8", function (error, data) {
+app.post("/api/notes", function (req, res) {
+    fs.readFile("/db/db.json", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
         }
         let noteData = JSON.parse(data);
         console.log(noteData);
-        req.body.id = uuid();
 
         let newNote = req.body;
         console.log(newNote);
@@ -52,14 +50,12 @@ app.post("api/notes", function (req, res) {
         noteData.push(newNote);
 
 
-        fs.writeFile("db/db.json", JSON.stringify(json, null, 2), function (err) {
+        fs.writeFile("/db/db.json", JSON.stringify(json, null, 2), function (err) {
             if (err) throw err;
             res.send('200');
         })
     });
 });
-
-// Save
 
 // Delete
 
