@@ -16,16 +16,16 @@ app.use(express.static('public'));
 
 // Main Page
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 // Notes Page
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/notes.html"));
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 // API
 app.get("/api/notes", function (req, res) {
-    fs.readFile("./db/db.json", "utf8", function (error, data) {
+    fs.readFile("db/db.json", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
         }
@@ -34,8 +34,8 @@ app.get("/api/notes", function (req, res) {
 });
 
 //Post
-app.post("/api/notes", function (req, res) {
-    fs.readFile("./db/db.json", "utf8", function (error, data) {
+app.post("api/notes", function (req, res) {
+    fs.readFile("db/db.json", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
         }
@@ -50,7 +50,7 @@ app.post("/api/notes", function (req, res) {
         noteData.push(newNote);
 
 
-        fs.writeFile("./db/db.json", JSON.stringify(json, null, 2), function (err) {
+        fs.writeFile("db/db.json", JSON.stringify(json, null, 2), function (err) {
             if (err) throw err;
             res.send('200');
         })
