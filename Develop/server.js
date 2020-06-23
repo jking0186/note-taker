@@ -10,7 +10,7 @@ var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extend: true }));
 app.use(express.json());
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 
@@ -33,7 +33,7 @@ app.get("/api/notes", function (req, res) {
     });
 });
 
-app.post("/api/notes", function(req, res) {
+app.post("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
@@ -43,6 +43,16 @@ app.post("/api/notes", function(req, res) {
 
         let newNote = req.body;
         console.log(newNote);
+
+        noteData.push(newNote);
+
+        fs.writeFile("./db/db.json", process.argv[2], function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("Success!");
+        })
+        res.json(newData);
     });
 })
 // Start our server
