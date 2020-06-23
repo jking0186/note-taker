@@ -2,6 +2,7 @@
 var express = require("express");
 var path = require("path")
 var fs = require("fs");
+var uuid = require("uuid/v4");
 
 // Express App
 var app = express();
@@ -41,6 +42,7 @@ app.post("api/notes", function (req, res) {
         }
         let noteData = JSON.parse(data);
         console.log(noteData);
+        req.body.id = uuid();
 
         let newNote = req.body;
         console.log(newNote);
